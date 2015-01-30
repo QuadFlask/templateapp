@@ -14,6 +14,11 @@ public class EnhancedActionBarActivity extends ActionBarActivity {
 	private Integer defaultPrimaryColor = null;
 	private Integer defaultPrimaryDarkColor = null;
 
+	public enum ToolbarNaviIcon {
+		BACK, MENU, NONE,
+		BACK_DARK, MENU_DARK
+	}
+
 	protected void afterViews(Toolbar toolbar) {
 		setToolbar(toolbar);
 		setSupportActionBar(toolbar);
@@ -72,24 +77,30 @@ public class EnhancedActionBarActivity extends ActionBarActivity {
 		changeTitleColors(getColor(titleTextColorResId), getColor(subtitleTextColorResId));
 	}
 
-	public void setDefaultToolbarNavigationIcon() {
-		toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-	}
-
-	public void setDefaultToolbarNavigationIconDark() {
-		toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+	public void setDefaultToolbarNavigationIcon(ToolbarNaviIcon icon) {
+		if (icon == ToolbarNaviIcon.BACK_DARK) {
+			toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+			toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					finish();
+				}
+			});
+		} else if (icon == ToolbarNaviIcon.BACK) {
+			toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+			toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					finish();
+				}
+			});
+		} else if (icon == ToolbarNaviIcon.MENU_DARK) {
+			toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+		} else if (icon == ToolbarNaviIcon.MENU) {
+			toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+		} else if (icon == ToolbarNaviIcon.NONE) {
+			toolbar.setNavigationIcon(null);
+		}
 	}
 
 	public int getColor(int resId) {
